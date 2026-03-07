@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>確率統計 ポータルサイト.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E7%A2%BA%E7%8E%87%E7%B5%B1%E8%A8%88-%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%AB%E3%82%B5%E3%82%A4%E3%83%88">確率統計 ポータルサイト</h1>
+<p>このページでは，「確率・統計」の授業に関する情報をまとめて掲載します．</p>
+<hr>
+<h2 id="%F0%9F%93%98-%E6%95%99%E7%A7%91%E6%9B%B8%E3%83%BB%E5%95%8F%E9%A1%8C%E9%9B%86%E5%AF%BE%E5%BF%9C%E8%A1%A8%E5%89%8D%E6%9C%9F">📘 教科書・問題集対応表（前期）</h2>
+<table>
+<thead>
+<tr>
+<th>回</th>
+<th>授業テーマ</th>
+<th>教科書ページ</th>
+<th>問題集</th>
+<th>演習・資料</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第1回</td>
+<td>確率の定義</td>
+<td>pp.2-pp.5</td>
+<td>Basic 1-8</td>
+<td><a href="./first01.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第2回</td>
+<td>確率の基本性質，期待値</td>
+<td>pp.6-pp.11</td>
+<td>Basic 9-15</td>
+<td><a href="./first02.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第3回</td>
+<td>条件つき確率と乗法定理</td>
+<td>pp.14-pp.17</td>
+<td>Basic 35-38</td>
+<td><a href="./first03.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第4回</td>
+<td>ベイズの定理</td>
+<td>pp.115-pp.117</td>
+<td>65-68</td>
+<td><a href="./first04.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第5回</td>
+<td>事象の独立，反復試行</td>
+<td>pp.18-pp.23</td>
+<td>Basic39-43</td>
+<td><a href="./first05.pdf">スライド</a></td>
+<td>レポートあり</td>
+</tr>
+<tr>
+<td>第6回</td>
+<td>度数分布，代表値</td>
+<td>pp.28-pp.33</td>
+<td>Basic72-77</td>
+<td><a href="./first06.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第7回</td>
+<td>散布度</td>
+<td>pp.34-pp.38</td>
+<td>Basic78-80</td>
+<td><a href="./first07.pdf">スライド</a></td>
+<td>レポートあり</td>
+</tr>
+<tr>
+<td>第8回</td>
+<td>確率変数と確率分布</td>
+<td>pp.52-pp.55</td>
+<td>Basic110-117</td>
+<td><a href="./first08.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第9回</td>
+<td>二項分布</td>
+<td>pp.56-pp.57</td>
+<td>Basic118-121</td>
+<td><a href="./first09.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第10回</td>
+<td>ポアソン分布</td>
+<td>pp.58-pp.60</td>
+<td>Basic122-123</td>
+<td><a href="./first10.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第11回</td>
+<td>連続型確率分布</td>
+<td>pp.61-pp.64</td>
+<td>Basic124-125</td>
+<td><a href="./first11.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第12回</td>
+<td>連続型確率分布の平均と分散，正規分布</td>
+<td>pp.65-pp.68</td>
+<td>Basic126-128</td>
+<td><a href="./first12.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第13回</td>
+<td>正規分布の標準化</td>
+<td>pp.69-pp.70</td>
+<td>Basic129-131</td>
+<td><a href="./first13.pdf">スライド</a></td>
+<td>...</td>
+</tr>
+<tr>
+<td>第14回</td>
+<td>二項分布と正規分布の関係</td>
+<td>pp.71-pp.72</td>
+<td>Basic132-133</td>
+<td><a href="./first14.pdf">スライド</a></td>
+<td>レポートあり</td>
+</tr>
+<tr>
+<td>第15回</td>
+<td>前期復習</td>
+<td></td>
+<td></td>
+<td></td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%F0%9F%93%98-%E6%95%99%E7%A7%91%E6%9B%B8%E3%83%BB%E5%95%8F%E9%A1%8C%E9%9B%86%E5%AF%BE%E5%BF%9C%E8%A1%A8%E5%BE%8C%E6%9C%9F">📘 教科書・問題集対応表（後期）</h2>
+<table>
+<thead>
+<tr>
+<th>回</th>
+<th>授業テーマ</th>
+<th>教科書ページ</th>
+<th>問題集</th>
+<th>演習・資料</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第1回</td>
+<td>確率変数の関数</td>
+<td>pp.75-pp.77</td>
+<td>Basic 149-153</td>
+<td><a href="./second01.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第2回</td>
+<td>母集団と標本，統計量と標本分布</td>
+<td>pp.78-pp.82</td>
+<td>Basic 154-156</td>
+<td><a href="./second02.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第3回</td>
+<td>いろいろな確率分布</td>
+<td>pp.83-pp.85</td>
+<td>Basic 157-160</td>
+<td><a href="./second03.pdf">スライド</a></td>
+<td>レポートあり</td>
+</tr>
+<tr>
+<td>第4回</td>
+<td>点推定</td>
+<td>pp.90-pp.92</td>
+<td>Basic 185-186</td>
+<td><a href="./second04.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第5回</td>
+<td>母平均の区間推定</td>
+<td>pp.93-pp.95</td>
+<td>Basic 187-189</td>
+<td><a href="./second05.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第6回</td>
+<td>母比率の区間推定</td>
+<td>pp.96-pp.98</td>
+<td>Basic 190-193</td>
+<td><a href="./second06.pdf">スライド</a></td>
+<td>レポートあり</td>
+</tr>
+<tr>
+<td>第7回</td>
+<td>問題演習</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>第8回</td>
+<td>仮説検定</td>
+<td>pp.101-pp.103</td>
+<td>Basic 202</td>
+<td><a href="./second07.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第9回</td>
+<td>母平均の検定</td>
+<td>pp.104-pp.106</td>
+<td>Basic 203-204</td>
+<td><a href="./second08.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第10回</td>
+<td>母平均の差の検定</td>
+<td>pp.107-pp.108</td>
+<td>Basic 205-206</td>
+<td><a href="./second09.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第11回</td>
+<td>母比率の検定</td>
+<td>pp.109-pp.111</td>
+<td>Basic 207-208</td>
+<td><a href="./second10.pdf">スライド</a></td>
+<td>レポートあり</td>
+</tr>
+<tr>
+<td>第12回</td>
+<td>相関</td>
+<td>pp.41-pp.44</td>
+<td>Basic 90-91</td>
+<td><a href="./second11.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第13回</td>
+<td>回帰直線</td>
+<td>pp.45-pp.47</td>
+<td>Basic 92-94</td>
+<td><a href="./second12.pdf">スライド</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第14回</td>
+<td>問題演習</td>
+<td></td>
+<td></td>
+<td></td>
+<td>-</td>
+</tr>
+<tr>
+<td>第15回</td>
+<td>後期復習</td>
+<td></td>
+<td></td>
+<td></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%F0%9F%93%AC-%E9%80%A3%E7%B5%A1%E3%83%BB%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B">📬 連絡・お知らせ</h2>
+<ul>
+<li>授業後の資料はこのポータルに随時掲載します</li>
+<li>Teamsでの回答をもとに，次回の授業を調整します</li>
+<li>不明点はTeamsのチャットで連絡してください</li>
+</ul>
+
+</body>
+</html>
