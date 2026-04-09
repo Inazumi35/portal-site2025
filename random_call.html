@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ランダム指名</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 30px; background: #f5f5f5; }
+    h1 { color: #444; }
+    .class-buttons { margin: 16px 0; }
+    .class-btn {
+      font-size: 18px; padding: 10px 28px; margin: 6px;
+      border: 2px solid #888; border-radius: 8px;
+      background: #fff; cursor: pointer;
+    }
+    .class-btn.active { background: #4a90d9; color: #fff; border-color: #4a90d9; }
+    #number {
+      font-size: 140px; font-weight: bold; color: #222;
+      margin: 30px auto; line-height: 1;
+    }
+    #remain { font-size: 22px; color: #666; margin-bottom: 24px; }
+    .btn-row { margin: 8px; }
+    #nextBtn {
+      font-size: 28px; padding: 16px 60px;
+      background: #4a90d9; color: #fff;
+      border: none; border-radius: 10px; cursor: pointer;
+    }
+    #nextBtn:hover { background: #357abd; }
+    #nextBtn:disabled { background: #aaa; cursor: default; }
+    #resetBtn {
+      font-size: 16px; padding: 8px 24px; margin-top: 12px;
+      background: #eee; border: 1px solid #aaa; border-radius: 6px; cursor: pointer;
+    }
+    #done { font-size: 28px; color: #e74c3c; font-weight: bold; display: none; margin: 20px; }
+  </style>
+</head>
+<body>
+  <h1>ランダム指名</h1>
+
+  <div class="class-buttons">
+    <button class="class-btn active" onclick="setClass(42, this)">1I（1〜42）</button>
+    <button class="class-btn" onclick="setClass(41, this)">1C（1〜41）</button>
+    <button class="class-btn" onclick="setClass(40, this)">1A（1〜40）</button>
+    <button class="class-btn" onclick="setClass(41, this)">4C（1〜41）</button>
+    <button class="class-btn" onclick="setClass(47, this)">4A（1〜47）</button>
+  </div>
+
+  <div id="number">--</div>
+  <div id="remain"></div>
+  <div id="done">全員終了！</div>
+
+  <div class="btn-row">
+    <button id="nextBtn" onclick="next()">次の人を表示</button>
+  </div>
+  <div class="btn-row">
+    <button id="resetBtn" onclick="reset()">リセット</button>
+  </div>
+
+  <script>
+    let queue = [];
+    let total = 40;
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    function setClass(n, btn) {
+      document.querySelectorAll('.class-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      total = n;
+      reset();
+    }
+
+    function reset() {
+      queue = Array.from({length: total}, (_, i) => i + 1);
+      shuffle(queue);
+      document.getElementById('number').textContent = '--';
+      document.getElementById('remain').textContent = `残り ${total} 人`;
+      document.getElementById('done').style.display = 'none';
+      document.getElementById('nextBtn').disabled = false;
+    }
+
+    function next() {
+      if (queue.length === 0) return;
+      const n = queue.pop();
+      document.getElementById('number').textContent = n;
+      if (queue.length === 0) {
+        document.getElementById('remain').textContent = '残り 0 人';
+        document.getElementById('done').style.display = 'block';
+        document.getElementById('nextBtn').disabled = true;
+      } else {
+        document.getElementById('remain').textContent = `残り ${queue.length} 人`;
+      }
+    }
+
+    reset();
+  </script>
+</body>
+</html>
